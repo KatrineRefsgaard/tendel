@@ -10,13 +10,17 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 function SignUp() {
+    // Initialiserer Firebase Authentication og får adgang til autentificeringsobjektet
     const auth = getAuth();
 
+    // Lokale tilstande til opbevaring af brugerens email, adgangskode og fejlbesked
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
 
+     // Funktion til at håndtere oprettelse af bruger
     const handleSubmit = async () => {
+        // Opret bruger ved hjælp af email og adgangskode
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;

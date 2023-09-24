@@ -4,34 +4,35 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signOut } from "firebase/auth";
 
 function ProfileScreen() {
+    // Initialiserer Firebase Authentication og får adgang til brugeren
     const auth = getAuth();
     const user = auth.currentUser;
 
+    // Lokale tilstande til opbevaring af brugerens profiloplysninger og fejlbeskeder
     const [name, setName] = useState('');
     const [gender, setGender] = useState('');
     const [age, setAge] = useState('');
     const [skillLevel, setSkillLevel] = useState('beginner');
     const [errorMessage, setErrorMessage] = useState(null);
 
+
+// Funktion til at logge brugeren ud
     const handleLogOut = async () => {
         await signOut(auth)
             .then(() => {
-                // Sign-out successful.
+                // Vellykket log ud
             })
             .catch((error) => {
-                // An error happened.
             });
     };
 
+ // Hvis der ikke er nogen aktuel bruger, vises en besked om, at brugeren ikke blev fundet
     if (!auth.currentUser) {
         return <View><Text>Not found</Text></View>;
     }
-
+   
+    // Funktion til at håndtere indsendelse af brugerens profiloplysninger
     const handleSubmit = () => {
-        // Her kan du sende brugerens profiloplysninger til din database eller udføre andre handlinger.
-        // Du kan bruge variablerne name, gender, age og skillLevel til at sende data til din backend eller database.
-
-        // Eksempel: Send data til en API
         const profileData = {
             name,
             gender,
@@ -39,10 +40,7 @@ function ProfileScreen() {
             skillLevel,
         };
 
-        // Her kan du sende profileData til din API eller database.
-        // Du kan bruge fetch eller en anden HTTP-anmodningsmetode til dette formål.
-
-        // Nulstil felterne efter afsendelse
+        // Nulstiller inputfelterne efter indsendelse
         setName('');
         setGender('');
         setAge('');
@@ -106,19 +104,19 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 16,
-        backgroundColor: '#F9F9F9', // Baggrundsfarve
+        backgroundColor: '#F9F9F9',
     },
     header: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
-        color: '#333', // Tekstfarve
+        color: '#333', 
     },
     label: {
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 5,
-        color: '#555', // Tekstfarve
+        color: '#555', 
     },
     inputField: {
         borderWidth: 1,
@@ -126,7 +124,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         borderColor: '#ccc',
-        backgroundColor: '#fff', // Baggrundsfarve
+        backgroundColor: '#fff', 
     },
     radioButtons: {
         flexDirection: 'row',
@@ -142,11 +140,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     radioButtonSelected: {
-        borderColor: '#007AFF', // Farve for valgt knap
-        backgroundColor: '#007AFF', // Farve for valgt knap
+        borderColor: '#007AFF',
+        backgroundColor: '#007AFF',
     },
     radioButtonText: {
-        color: '#333', // Farve for teksten på knapperne
+        color: '#333',
     },
     error: {
         color: 'red',

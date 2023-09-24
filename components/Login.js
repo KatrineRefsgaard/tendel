@@ -10,12 +10,15 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 function Login() {
+    // Initialiserer Firebase authentication
     const auth = getAuth();
 
+    // Opretter lokale tilstande for email, password og fejlbesked
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
 
+    //Funktion der håndterer indsendelse af login-formularen
     const handleSubmit = async () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {

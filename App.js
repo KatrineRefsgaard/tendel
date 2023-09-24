@@ -12,7 +12,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 
-
+// Firebase konfigurationsobjekt med mine app-oplysninger
 const firebaseConfig = {
   apiKey: "AIzaSyADVNN7l-WChOyTu1tVv_iepDxPIEujW5g",
   authDomain: "tendel-app.firebaseapp.com",
@@ -25,6 +25,7 @@ const firebaseConfig = {
 export default function App() {
   const [user, setUser] = useState({ loggedIn: false });
 
+  // Initialiserer Firebase, hvis den ikke allerede er det i forvejen
   if (getApps().length < 1) {
     initializeApp(firebaseConfig);
     console.log("Firebase On!");
@@ -34,6 +35,7 @@ export default function App() {
 
   const auth = getAuth();
 
+  // Funktion til at lytte efter ændringer i brugerens autentificeringsstatus
   function onAuthStateChange(callback) {
     return onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -45,7 +47,8 @@ export default function App() {
       }
     });
   }
-
+  
+// Overvågning af autentificeringsstatus
   useEffect(() => {
     const unsubscribe = onAuthStateChange(setUser);
     return () => {
@@ -53,6 +56,7 @@ export default function App() {
     };
   }, []);
 
+  //Gæstesiden der vises, når brugeren ikke er logget ind endnu
   const GuestPage = () => {
     return (
       <View style={styles.container}>
@@ -67,6 +71,7 @@ export default function App() {
     );
   }
 
+  // Oprettelse af Bottom Tab Navigator, der viser enten brugerens profil eller kalenderen
   const Tab = createBottomTabNavigator();
 
   return user.loggedIn ? (<NavigationContainer>
