@@ -6,6 +6,12 @@ import { Card } from 'react-native-paper';
 import ProfileScreen from './components/ProfileScreen';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import CalendarScreen from './components/CalendarScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyADVNN7l-WChOyTu1tVv_iepDxPIEujW5g",
@@ -61,7 +67,14 @@ export default function App() {
     );
   }
 
-  return user.loggedIn ? <ProfileScreen /> : <GuestPage />;
+  const Tab = createBottomTabNavigator();
+
+  return user.loggedIn ? (<NavigationContainer>
+    <Tab.Navigator>
+      <Tab.Screen name={'ProfileScreen'} component={ProfileScreen} options={{ tabBarIcon: () => (<Ionicons name="person" size={20} />), headerShown: null }} />
+      <Tab.Screen name={'CalendarScreen'} component={CalendarScreen} options={{ tabBarIcon: () => (<Ionicons name="calendar" size={20} />), headerShown: null }} />
+    </Tab.Navigator>
+  </NavigationContainer>) : <GuestPage />;
 }
 
 const styles = StyleSheet.create({
